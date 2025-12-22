@@ -13,14 +13,9 @@
     @apply border-gray-200;
   }
 
-  body {
+body {
     color: #ffffff;
-    background: linear-gradient(
-      to bottom,
-      var(--color-header) 0px,
-      var(--color-header) 96px,
-      var(--color-primary) 280px
-    );
+    background: linear-gradient(to bottom, #0a0a0a 0%, #1a1a1a 25%, #2d2d2d 50%, #404040 75%, #4a4a4a 100%);
     min-height: 100vh;
   }
 }

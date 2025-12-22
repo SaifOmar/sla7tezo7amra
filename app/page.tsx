@@ -1,30 +1,33 @@
-import { getPosts } from '@/lib/cosmic'
-import PostCard from '@/components/PostCard'
-import { Post } from '@/types'
+import { getPosts } from "@/lib/cosmic";
+import FeaturedCarousel from "@/components/FeaturedCarousel";
+import { Post } from "@/types";
 
 export default async function HomePage() {
-  const posts = await getPosts() as Post[]
-  
+  const posts = (await getPosts()) as Post[];
+
   return (
-    <div className="max-w-6xl mx-auto px-4 py-12">
-      <div className="text-center mb-12">
-        <h1 className="text-5xl font-bold mb-4">Welcome to Our Blog</h1>
-        <p className="text-xl text-gray-600">
-          Explore our latest articles and insights
-        </p>
+    <div className="w-full">
+      {/* Hero Section /}
+      <div className="max-w-[1600px] mx-auto px-4 pt-12 pb-8">
+        <div className="text-center mb-12">
+          <h1 className="text-5xl font-bold mb-4 text-white">Welcome to Our Blog</h1>
+          <p className="text-xl text-gray-300">Explore our latest articles and insights</p>
+        </div>
       </div>
-      
-      {posts.length === 0 ? (
-        <div className="text-center py-12">
-          <p className="text-gray-600 text-lg">No posts yet. Check back soon!</p>
+
+      {/ Featured Carousel - Full width */}
+      {posts.length > 0 ? (
+        <div className="w-full py-8">
+          <div className="max-w-[1600px] mx-auto px-4 mb-8">
+            <h2 className="text-3xl font-bold text-white text-center">Featured Posts</h2>
+          </div>
+          <FeaturedCarousel posts={posts} />
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {posts.map((post) => (
-            <PostCard key={post.id} post={post} />
-          ))}
+        <div className="text-center py-12">
+          <p className="text-gray-400 text-lg">No posts yet. Check back soon!</p>
         </div>
       )}
     </div>
-  )
+  );
 }
