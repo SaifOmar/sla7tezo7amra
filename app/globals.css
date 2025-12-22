@@ -2,13 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @layer base {
+  :root {
+    --color-primary: #2F3133; /* body */
+    --color-header: #1C1C1D;  /* nav */
+  }
+
   * {
     @apply border-gray-200;
   }
-  
+
   body {
-    @apply bg-white text-gray-900;
+    color: #ffffff;
+    background: linear-gradient(
+      to bottom,
+      var(--color-header) 0px,
+      var(--color-header) 96px,
+      var(--color-primary) 280px
+    );
+    min-height: 100vh;
   }
 }
 

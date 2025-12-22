@@ -25,18 +25,7 @@ export default function CosmicBadge({ bucketSlug }: { bucketSlug: string }) {
       href={`https://www.cosmicjs.com?utm_source=bucket_${bucketSlug}&utm_medium=referral&utm_campaign=app_badge&utm_content=built_with_cosmic`}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-5 right-5 flex items-center gap-2 text-gray-800 text-sm font-medium no-underline transition-colors duration-200 z-50"
-      style={{
-        position: 'fixed',
-        backgroundColor: 'white',
-        border: '1px solid #e5e7eb',
-        borderRadius: '8px',
-        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-        padding: '12px 16px',
-        width: '180px'
-      }}
-      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f9fafb'}
-      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'white'}
+      className="fixed bottom-5 right-5 flex items-center gap-2 text-gray-800 text-sm font-medium no-underline transition-colors duration-200 z-50 bg-white border border-gray-200 rounded-lg shadow-lg px-4 py-3 w-44 hover:bg-gray-50 relative"
     >
       <button
         onClick={(e) => {

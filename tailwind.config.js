@@ -11,7 +11,16 @@ module.exports = {
       },
       colors: {
         primary: {
-          DEFAULT: '#2563eb',
+          50: '#f5f7f9',
+          100: '#e6eef6',
+          200: '#cfe0ef',
+          300: '#9fbfdf',
+          400: '#6f9fcd',
+          DEFAULT: '#092334',
+          600: '#43647f',
+          700: '#344b5c',
+          800: '#24323a',
+          900: '#12181d',
           foreground: '#ffffff',
         },
         secondary: {

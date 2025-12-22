@@ -1,9 +1,9 @@
-(function() {
+(function () {
   if (window.self === window.top) return;
-  
+
   const logs = [];
   const MAX_LOGS = 500;
-  
+
   const originalConsole = {
     log: console.log,
     warn: console.warn,
@@ -11,7 +11,7 @@
     info: console.info,
     debug: console.debug
   };
-  
+
   function captureLog(level, args) {
     const timestamp = new Date().toISOString();
     const message = args.map(arg => {
@@ -28,60 +28,60 @@
       }
       return String(arg);
     }).join(' ');
-    
+
     const logEntry = {
       timestamp,
       level,
       message,
       url: window.location.href
     };
-    
+
     logs.push(logEntry);
     if (logs.length > MAX_LOGS) {
       logs.shift();
     }
-    
+
     try {
       window.parent.postMessage({
         type: 'console-log',
         log: logEntry
       }, '*');
-    } catch (e) {}
+    } catch (e) { }
   }
-  
-  console.log = function(...args) {
+
+  console.log = function (...args) {
     originalConsole.log.apply(console, args);
     captureLog('log', args);
   };
-  
-  console.warn = function(...args) {
+
+  console.warn = function (...args) {
     originalConsole.warn.apply(console, args);
     captureLog('warn', args);
   };
-  
-  console.error = function(...args) {
+
+  console.error = function (...args) {
     originalConsole.error.apply(console, args);
     captureLog('error', args);
   };
-  
-  console.info = function(...args) {
+
+  console.info = function (...args) {
     originalConsole.info.apply(console, args);
     captureLog('info', args);
   };
-  
-  console.debug = function(...args) {
+
+  console.debug = function (...args) {
     originalConsole.debug.apply(console, args);
     captureLog('debug', args);
   };
-  
-  window.addEventListener('error', function(event) {
+
+  window.addEventListener('error', function (event) {
     captureLog('error', [event.message + ' at ' + event.filename + ':' + event.lineno]);
   });
-  
-  window.addEventListener('unhandledrejection', function(event) {
+
+  window.addEventListener('unhandledrejection', function (event) {
     captureLog('error', ['Unhandled Promise Rejection:', event.reason]);
   });
-  
+
   function sendReady() {
     try {
       window.parent.postMessage({
@@ -89,9 +89,9 @@
         url: window.location.href,
         timestamp: new Date().toISOString()
       }, '*');
-    } catch (e) {}
+    } catch (e) { }
   }
-  
+
   function sendRouteChange() {
     try {
       window.parent.postMessage({
@@ -104,32 +104,32 @@
         },
         timestamp: new Date().toISOString()
       }, '*');
-    } catch (e) {}
+    } catch (e) { }
   }
-  
+
   if (document.readyState === 'complete') {
     sendReady();
     sendRouteChange();
   } else {
-    window.addEventListener('load', function() {
+    window.addEventListener('load', function () {
       sendReady();
       sendRouteChange();
     });
   }
-  
+
   const originalPushState = history.pushState;
   const originalReplaceState = history.replaceState;
-  
-  history.pushState = function() {
+
+  history.pushState = function () {
     originalPushState.apply(history, arguments);
     sendRouteChange();
   };
-  
-  history.replaceState = function() {
+
+  history.replaceState = function () {
     originalReplaceState.apply(history, arguments);
     sendRouteChange();
   };
-  
+
   window.addEventListener('popstate', sendRouteChange);
   window.addEventListener('hashchange', sendRouteChange);
 })();

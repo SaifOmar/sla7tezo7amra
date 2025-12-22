@@ -6,22 +6,22 @@ import remarkGfm from 'remark-gfm'
 import CommentList from '@/components/CommentList'
 import { notFound } from 'next/navigation'
 
-export default async function PostPage({ 
-  params 
-}: { 
-  params: Promise<{ slug: string }> 
+export default async function PostPage({
+  params
+}: {
+  params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
   const post = await getPost(slug) as Post | null
-  
+
   if (!post) {
     notFound()
   }
-  
+
   const comments = await getCommentsByPost(post.id) as Comment[]
-  
+
   return (
-    <article className="max-w-4xl mx-auto px-4 py-12">
+    <article className="max-w-4xl mx-auto px-4 py-12 text-center">
       {/* Hero Section with Featured Image */}
       <div className="relative h-96 rounded-2xl overflow-hidden mb-8">
         <img
@@ -37,7 +37,6 @@ export default async function PostPage({
           )}
         </div>
       </div>
-      
       {/* Author Info and Meta */}
       <div className="flex items-center gap-4 mb-8 pb-8 border-b border-gray-200">
         {post.metadata.author_avatar && (
@@ -53,28 +52,34 @@ export default async function PostPage({
             <div className="text-gray-600 text-sm">{post.metadata.author_bio}</div>
           )}
         </div>
-        <div className="flex gap-6 text-sm text-gray-600">
-          <div className="flex items-center gap-2">
-            <span>❤️</span>
-            <span>{post.metadata.likes_count} likes</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span>👁️</span>
-            <span>{post.metadata.views_count} views</span>
-          </div>
-        </div>
       </div>
-      
+
       {/* Post Content */}
       <div className="prose prose-lg max-w-none mb-12">
         <ReactMarkdown remarkPlugins={[remarkGfm]}>
           {post.metadata.content}
         </ReactMarkdown>
       </div>
-      
+
       {/* Comments Section */}
       <div className="border-t border-gray-200 pt-12">
-        <h2 className="text-3xl font-bold mb-8">
+        {/* Stats Bar */}
+        <div className="flex justify-between items-center mb-8 text-gray-800">
+          {/* Likes */}
+          <div className="flex items-center gap-3 text-lg font-semibold">
+            <span className="text-2xl bg-gray-200 rounded-full p-2">❤️</span>
+            <span>{post.metadata.likes_count} likes</span>
+          </div>
+
+          {/* Views */}
+          <div className="flex items-center gap-3 text-lg font-semibold">
+            <span className="text-blue-500 text-2xl">👁️</span>
+            <span>{post.metadata.views_count} views</span>
+          </div>
+        </div>
+
+        {/* Comments Section */}
+        <h2 className="text-3xl font-bold mb-8 text-center">
           Comments ({comments.length})
         </h2>
         <CommentList comments={comments} />

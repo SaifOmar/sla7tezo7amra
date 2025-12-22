@@ -18,9 +18,11 @@ export async function getPosts() {
       .find({ type: 'posts' })
       .props(['id', 'title', 'slug', 'metadata'])
       .depth(1);
-    
+
+    console.log("response: ", response);
     const posts = response.objects;
-    
+    console.log("posts: ", posts);
+
     // Manual sorting by published_date (newest first)
     return posts.sort((a, b) => {
       const dateA = new Date(a.metadata?.published_date || '').getTime();
@@ -45,7 +47,7 @@ export async function getPost(slug: string) {
       })
       .props(['id', 'title', 'slug', 'metadata'])
       .depth(1);
-    
+
     return response.object;
   } catch (error) {
     if (hasStatus(error) && error.status === 404) {
@@ -59,15 +61,15 @@ export async function getPost(slug: string) {
 export async function getCommentsByPost(postId: string) {
   try {
     const response = await cosmic.objects
-      .find({ 
+      .find({
         type: 'comments',
-        'metadata.post': postId 
+        'metadata.post': postId
       })
       .props(['id', 'title', 'metadata'])
       .depth(1);
-    
+
     const comments = response.objects;
-    
+
     // Manual sorting by created_at (newest first)
     return comments.sort((a, b) => {
       const dateA = new Date(a.metadata?.created_at || '').getTime();
