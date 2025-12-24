@@ -24,7 +24,7 @@ export async function getPosts() {
     console.log("posts: ", posts);
 
     // Manual sorting by published_date (newest first)
-    return posts.sort((a, b) => {
+    return posts.sort((a: any, b: any) => {
       const dateA = new Date(a.metadata?.published_date || '').getTime();
       const dateB = new Date(b.metadata?.published_date || '').getTime();
       return dateB - dateA;
@@ -71,7 +71,7 @@ export async function getCommentsByPost(postId: string) {
     const comments = response.objects;
 
     // Manual sorting by created_at (newest first)
-    return comments.sort((a, b) => {
+    return comments.sort((a: any, b: any) => {
       const dateA = new Date(a.metadata?.created_at || '').getTime();
       const dateB = new Date(b.metadata?.created_at || '').getTime();
       return dateB - dateA;
