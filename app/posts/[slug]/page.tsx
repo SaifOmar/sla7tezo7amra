@@ -3,7 +3,9 @@ import { getPost, getCommentsByPost } from "@/lib/cosmic";
 import { Post, Comment } from "@/types";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import CommentList from "@/components/CommentList";
+import CommentsSection from "@/components/CommentsSection";
+import LikeButton from "@/components/LikeButton";
+import PostStats from "@/components/PostStats";
 import { notFound } from "next/navigation";
 
 // Function to detect if text is Arabic
@@ -49,31 +51,17 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
       </div>
 
       {/* Comments Section */}
-      <div className="border-t border-gray-200 pt-12">
+      <div className="border-t border-gray-200 pt-12 space-y-12">
         {/* Stats Bar */}
-        <div className="flex justify-between items-center mb-8 p-4 bg-gradient-to-r from-white to-gray-100 rounded-xl border border-gray-200 shadow-sm">
-          {/* Likes */}
-          <div className="flex items-center gap-3">
-            <span className="text-2xl">❤️</span>
-            <div>
-              <div className="text-sm text-gray-600">Likes</div>
-              <div className="text-xl font-bold text-rose-600">{post.metadata.likes_count}</div>
-            </div>
-          </div>
+        <PostStats postId={post.id} initialLikes={post.metadata.likes_count} views_count={post.metadata.views_count} />
 
-          {/* Views */}
-          <div className="flex items-center gap-3">
-            <span className="text-2xl">👁️</span>
-            <div>
-              <div className="text-sm text-gray-600">Views</div>
-              <div className="text-xl font-bold text-blue-600">{post.metadata.views_count}</div>
-            </div>
-          </div>
+        {/* Like Button */}
+        <div className="flex justify-center">
+          <LikeButton postId={post.id} initialLikes={post.metadata.likes_count} />
         </div>
 
         {/* Comments Section */}
-        <h2 className="text-3xl font-bold mb-8 text-gray-100 text-center">Comments ({comments.length})</h2>
-        <CommentList comments={comments} />
+        <CommentsSection postId={post.id} initialComments={comments} />
       </div>
     </article>
   );

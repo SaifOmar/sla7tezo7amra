@@ -19,9 +19,7 @@ export async function getPosts() {
       .props(['id', 'title', 'slug', 'metadata'])
       .depth(1);
 
-    console.log("response: ", response);
     const posts = response.objects;
-    console.log("posts: ", posts);
 
     // Manual sorting by published_date (newest first)
     return posts.sort((a: any, b: any) => {

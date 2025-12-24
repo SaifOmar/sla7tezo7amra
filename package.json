@@ -12,10 +12,11 @@
     "postbuild": "node scripts/inject-console-capture.js"
   },
   "dependencies": {
+    "@cosmicjs/sdk": "^1.5.6",
+    "lucide-react": "^0.562.0",
     "next": "16.0.7",
     "react": "^19.0.1",
     "react-dom": "^19.0.1",
-    "@cosmicjs/sdk": "^1.5.6",
     "react-markdown": "^9.0.1",
     "remark-gfm": "^4.0.0"
   },
@@ -23,12 +24,12 @@
     "@types/node": "^20.0.0",
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.1",
-    "typescript": "^5.0.0",
+    "autoprefixer": "^10.4.0",
     "eslint": "^9.0.0",
     "eslint-config-next": "16.0.7",
-    "tailwindcss": "^3.4.0",
-    "autoprefixer": "^10.4.0",
+    "glob": "^10.3.10",
     "postcss": "^8.4.0",
-    "glob": "^10.3.10"
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5.0.0"
   }
 }
